@@ -1,7 +1,12 @@
 body{
     font-family: "Plus Jakarta Sans", sans-serif !important;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
-
+.container{
+    flex: 1;
+}
 
 /* Navbar  */
 
@@ -48,6 +53,23 @@ body{
     background-color: white;
 }
 
+.add-btn{
+    border: none !important;
+}
+
+/* Edit page  */
+.edit-btn{
+    border: none !important;
+}
+
+/* Show page  */
+.show-img{
+    height: 30vh;
+}
+.btns{
+    display: flex;
+    margin-bottom: 2rem;
+}
 /* footer  */
 .f-info-links a{
     text-decoration: none;
