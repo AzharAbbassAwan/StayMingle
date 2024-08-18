@@ -30,14 +30,27 @@ app.get("/listings", async (req, res) =>{
     res.render("listings/index.ejs", {allListings});
 });
 
+app.get("/listings/new", (req, res) => {
+    res.render("listings/new.ejs");
+});
+
+app.get("/listings/:id/edit", async (req, res) =>{
+    let {id} = req.params;
+    let listing = await Listing.findById(id);
+    res.render("listings/edit.ejs", {listing})
+})
+
 app.get("/listings/:id", async (req, res) =>{
     let {id} = req.params;
     const listing = await Listing.findById(id);
     res.render("listings/show.ejs", {listing});
 });
 
-app.get("/listings/new", (req, res) => {
-    res.render("listings/create.ejs");
+//Create route
+app.post("/listings", async (req, res) =>{
+    const newListing = new Listing(req.body.listing);
+    await newListing.save();
+    res.redirect("/listings");
 })
 
 // app.get("/testListing", async (req,res) =>{
