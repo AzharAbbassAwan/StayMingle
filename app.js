@@ -3,10 +3,12 @@ const app = express();
 const mongoose = require("mongoose");
 const Listing = require("./models/listing.js");
 const path = require("path");
+const methodOverride = require("method-override");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({extended: true}));
+app.use(methodOverride("_method"));
 
 const MONGO_URL = "mongodb://127.0.0.1/staymingle";
 
@@ -34,11 +36,19 @@ app.get("/listings/new", (req, res) => {
     res.render("listings/new.ejs");
 });
 
+//update route
+app.put("listings/:id", async (req, res) =>{
+    let {id} = req.params;
+    Listing.findByIdAndUpdate(id, {...req.body.listing});
+    res.redirect(`/listings/${id}`);
+})
+//edit route
 app.get("/listings/:id/edit", async (req, res) =>{
     let {id} = req.params;
     let listing = await Listing.findById(id);
     res.render("listings/edit.ejs", {listing})
-})
+});
+
 
 app.get("/listings/:id", async (req, res) =>{
     let {id} = req.params;

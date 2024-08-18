@@ -6,34 +6,33 @@
     <title>Stay Mingle</title>
   </head>
   <body>
-    <h3>Create new listing</h3>
-    <form action="/listings" method="post">
-      <input type="text" name="listing[title]" placeholder="enter title" />
+    <h3>Edit your listing</h3>
+    <form action="/listings/<%= listing._id %>?_method=PUT" method="post">
+      <input type="text" name="listing[title]" value="<%= listing.title %>" />
       <br />
       <br />
-      <textarea
-        name="listing[description]"
-        placeholder="enter description"
-      ></textarea>
+      <textarea name="listing[description]">
+<%= listing.description %></textarea
+      >
       <br />
       <br />
-      <input
-        type="text"
-        name="listing[image]"
-        placeholder="Enter URL of image"
-      />
+      <input type="text" name="listing[image]" value="<%= listing.image %>" />
       <br /><br />
-      <input type="number" name="listing[price]" placeholder="enter price" />
+      <input type="number" name="listing[price]" value="<%= listing.price %>" />
       <br /><br />
       <input
         type="text"
         name="listing[location]"
-        placeholder="enter location"
+        value="<%= listing.location %>"
       />
       <br /><br />
-      <input type="text" name="listing[country]" placeholder="enter country" />
+      <input
+        type="text"
+        name="listing[country]"
+        value="<%= listing.country %>"
+      />
       <br /><br />
-      <button>Submit</button>
+      <button>Edit</button>
     </form>
   </body>
 </html>
