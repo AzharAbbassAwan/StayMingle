@@ -5,6 +5,8 @@ const Listing = require("./models/listing.js");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
+const wrapAsync = require("./utils/wrapAsync.js");
+const ExpressError = require("./utils/ExpressError.js");
 
 //middlewares
 app.set("view engine", "ejs");
@@ -43,6 +45,9 @@ app.get("/listings/new", (req, res) => {
 
 //update route
 app.put("listings/:id", async (req, res) =>{
+    if(!req.body.listing){
+        throw new ExpressError(400, "Send valid data!");
+    }
     let {id} = req.params;
     Listing.findByIdAndUpdate(id, {...req.body.listing});
     res.redirect(`/listings/${id}`);
@@ -70,10 +75,24 @@ app.get("/listings/:id", async (req, res) =>{
 });
 
 //Create route
-app.post("/listings", async (req, res) =>{
+app.post("/listings",wrapAsync(async(req, res, next) =>{
+    if(!req.body.listing){
+        throw new ExpressError(400, "Send valid data!");
+    }
     const newListing = new Listing(req.body.listing);
     await newListing.save();
     res.redirect("/listings");
+})
+);
+
+app.all("*", (req, res, next) =>{
+    next(new ExpressError(404, "Page not found!"));
+});
+
+//middleware to handle errors
+app.use((err, req, res, next) =>{
+    let {status, message} = err;
+    res.status(status).send(message);
 });
 
 app.listen(8080, () => {
