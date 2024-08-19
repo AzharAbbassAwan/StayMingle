@@ -15,9 +15,12 @@ app.use(express.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
+require("dotenv").config();
 
 //database url
-const MONGO_URL = "mongodb://127.0.0.1/staymingle";
+const MONGO_URL = process.env.MONGODB_URI;
+//port
+const port = process.env.PORT;
 
 main().then(() =>{
     console.log("Connected to DB");
@@ -95,6 +98,6 @@ app.use((err, req, res, next) =>{
     res.status(status).send(message);
 });
 
-app.listen(8080, () => {
-    console.log("server is listening to port 8080");
+app.listen(port, () => {
+    console.log(`server is listening to port ${port}`);
 });
