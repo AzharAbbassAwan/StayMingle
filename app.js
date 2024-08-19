@@ -7,6 +7,7 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
+require("dotenv").config();
 
 //middlewares
 app.set("view engine", "ejs");
@@ -15,7 +16,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
-require("dotenv").config();
+
 
 //database url
 const MONGO_URL = process.env.MONGODB_URI;
