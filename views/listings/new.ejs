@@ -3,7 +3,12 @@
   <div class="row">
     <div class="col-8 offset-2">
       <h3 class="mt-2">Create new listing</h3>
-      <form action="/listings" method="post">
+      <form
+        action="/listings"
+        novalidate
+        method="post"
+        class="needs-validation"
+      >
         <div class="mb-3">
           <label for="title" class="form-label">Title</label>
           <input
@@ -11,6 +16,7 @@
             type="text"
             name="listing[title]"
             placeholder="Add a eye-catching title"
+            required
           />
         </div>
         <div class="mb-3">
@@ -39,6 +45,7 @@
               type="number"
               name="listing[price]"
               placeholder="enter price"
+              required
             />
           </div>
           <div class="mb-3 col-md-8">
@@ -48,6 +55,7 @@
               type="text"
               name="listing[country]"
               placeholder="enter country"
+              required
             />
           </div>
         </div>
@@ -58,6 +66,7 @@
             type="text"
             name="listing[location]"
             placeholder="enter location"
+            required
           />
         </div>
         <button class="add-btn btn btn-primary mb-4">Submit</button>
