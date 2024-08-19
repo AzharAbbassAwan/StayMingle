@@ -95,8 +95,9 @@ app.all("*", (req, res, next) =>{
 
 //middleware to handle errors
 app.use((err, req, res, next) =>{
-    let {status, message} = err;
-    res.status(status).send(message);
+    let {status = 500, message = "Something went wrong"} = err;
+    res.status(status).render("error.ejs", {err});
+   // res.status(status).send(message);
 });
 
 app.listen(port, () => {
