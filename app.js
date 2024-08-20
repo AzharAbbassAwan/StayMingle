@@ -7,6 +7,7 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
+require("dotenv").config();
 
 //middlewares
 app.set("view engine", "ejs");
@@ -16,8 +17,11 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
+
 //database url
-const MONGO_URL = "mongodb://127.0.0.1/staymingle";
+const MONGO_URL = process.env.MONGODB_URI;
+//port
+const port = process.env.PORT;
 
 main().then(() =>{
     console.log("Connected to DB");
@@ -91,10 +95,11 @@ app.all("*", (req, res, next) =>{
 
 //middleware to handle errors
 app.use((err, req, res, next) =>{
-    let {status, message} = err;
-    res.status(status).send(message);
+    let {status = 500, message = "Something went wrong"} = err;
+    res.status(status).render("error.ejs", {err});
+   // res.status(status).send(message);
 });
 
-app.listen(8080, () => {
-    console.log("server is listening to port 8080");
+app.listen(port, () => {
+    console.log(`server is listening to port ${port}`);
 });
