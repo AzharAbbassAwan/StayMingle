@@ -1,5 +1,7 @@
 const joi = require("joi");
 
+
+//Creatting schema for validating form data
 module.exports.listingSchema = joi.object({
     listing : joi.object({
         title: joi.string().required(),

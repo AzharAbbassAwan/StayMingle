@@ -19,7 +19,7 @@ app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
 
-//database url
+//Mongo cluster url specified in .env file
 const MONGO_URL = process.env.MONGODB_URI;
 //port
 const port = process.env.PORT;
