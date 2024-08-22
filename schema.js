@@ -1,7 +1,7 @@
 const joi = require("joi");
 
 
-//Creatting schema for validating form data using external package
+//Creatting schema for validating form data using external package joi
 module.exports.listingSchema = joi.object({
     listing : joi.object({
         title: joi.string().required(),

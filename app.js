@@ -105,7 +105,8 @@ app.all("*", (req, res, next) =>{
 
 //middleware to handle errors
 app.use((err, req, res, next) =>{
-    let {status = 500, message = "Something went wrong"} = err;
+    //Default value of status code will be 500
+    let {status = 500} = err;
     res.status(status).render("error.ejs", {err});
 
 });
