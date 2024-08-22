@@ -1,6 +1,6 @@
 class ExpressError extends Error{
 
-    //custom error class
+    //custom error class for handling errors and providing users a specific message
     constructor(status, message){
         super();
         this.status = status;
