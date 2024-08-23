@@ -87,6 +87,9 @@ app.post("/listings/:id/review", wrapAsync(async (req, res) =>{
     listing.reviews.push(newReview);
 
     await listing.save();
+    await newReview.save();
+
+    res.send("new review saved!");
 }));
 
 //edit route
