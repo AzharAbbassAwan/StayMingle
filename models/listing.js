@@ -28,7 +28,7 @@ image: {
 price: Number,
 location: String,
 country: String,
-review:[{
+reviews:[{
     type: Schema.Types.ObjectId,
     ref: 'Review'
 }]

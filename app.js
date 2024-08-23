@@ -9,6 +9,7 @@ const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
 require("dotenv").config();
 const {listingSchema} = require("./schema.js");
+const Review = require('./models/review.js');
 
 //middlewares
 app.set("view engine", "ejs");
@@ -75,6 +76,17 @@ app.delete("/listings/:id",wrapAsync(async (req, res) =>{
     let {id} = req.params;
     await Listing.findByIdAndDelete(id);
     res.redirect("/listings");
+}));
+
+//Posting reviews
+app.post("/listings/:id/review", wrapAsync(async (req, res) =>{
+    let {id} = req.params;
+    let listing = await Listing.findById(id);
+    let newReview = new Review(req.body.review);
+
+    listing.reviews.push(newReview);
+
+    await listing.save();
 }));
 
 //edit route
