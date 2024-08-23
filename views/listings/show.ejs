@@ -44,5 +44,12 @@
     </div>
     <button type="submit">Submit</button>
     </form>
+
+    <hr />
+
+    <h4>Show reviews</h4>
+    <% for(review of listing.reviews){ %>
+    <li><%= review.comment %> , <%= review.rating %> stars</li>
+    <% } %>
   </div>
 </div>
