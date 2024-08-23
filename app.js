@@ -9,8 +9,9 @@ const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
 require("dotenv").config();
 const {listingSchema} = require("./schema.js");
-const Review = require('./models/review.js');
 const {reviewSchema} = require("./schema.js");
+const Review = require("./models/review.js");
+
 
 
 //middlewares
@@ -93,7 +94,7 @@ app.delete("/listings/:id",wrapAsync(async (req, res) =>{
 }));
 
 //Posting reviews
-app.post("/listings/:id/review", valiateReview, wrapAsync(async (req, res) =>{
+app.post("/listings/review/:id", valiateReview, wrapAsync(async (req, res) =>{
     let {id} = req.params;
     let listing = await Listing.findById(id);
     let newReview = new Review(req.body.review);
@@ -103,7 +104,15 @@ app.post("/listings/:id/review", valiateReview, wrapAsync(async (req, res) =>{
     await listing.save();
     await newReview.save();
 
-    res.redirect(`listings/${id}`);
+    res.redirect(`/listings/${id}`);
+}));
+
+//deleting reviews
+app.delete("/listings/:id/review/:reviewId", wrapAsync(async (req, res) =>{
+    let {id, reviewId} = req.params;
+    await Listing.findByIdAndUpdate(id, {$pull: {reviews: reviewId}});
+    await Review.findByIdAndDelete(reviewId);
+    res.redirect(`/listings/${id}`);
 }));
 
 //edit route

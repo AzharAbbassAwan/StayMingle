@@ -70,6 +70,17 @@ body{
     display: flex;
     margin-bottom: 2rem;
 }
+
+/* Review rating  */
+.star {
+    font-size: 24px;
+    color: gold;
+    display: inline-block;
+}
+.star.inactive {
+    color: lightgray;
+}
+
 /* footer  */
 .f-info-links a{
     text-decoration: none;
