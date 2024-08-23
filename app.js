@@ -10,6 +10,8 @@ const ExpressError = require("./utils/ExpressError.js");
 require("dotenv").config();
 const {listingSchema} = require("./schema.js");
 const Review = require('./models/review.js');
+const {reviewSchema} = require("./schema.js");
+
 
 //middlewares
 app.set("view engine", "ejs");
@@ -52,6 +54,18 @@ const validateListing = (req, res, next) =>{
     }
 }
 
+//custom middleware function for review validation
+const valiateReview = (req, res, next) =>{
+    let {error} = reviewSchema.validate(req.body);
+    if(error){
+        let errMsg = error.details.map((el) => el.message).join(",")
+        throw new ExpressError(400, error);
+    }
+    else{
+        next();
+    }
+}
+
 app.get("/listings", wrapAsync(async (req, res) =>{
     const allListings = await Listing.find();
     res.render("listings/index.ejs", {allListings});
@@ -79,7 +93,7 @@ app.delete("/listings/:id",wrapAsync(async (req, res) =>{
 }));
 
 //Posting reviews
-app.post("/listings/:id/review", wrapAsync(async (req, res) =>{
+app.post("/listings/:id/review", valiateReview, wrapAsync(async (req, res) =>{
     let {id} = req.params;
     let listing = await Listing.findById(id);
     let newReview = new Review(req.body.review);
@@ -89,7 +103,7 @@ app.post("/listings/:id/review", wrapAsync(async (req, res) =>{
     await listing.save();
     await newReview.save();
 
-    res.send("new review saved!");
+    res.redirect(`listings/${id}`);
 }));
 
 //edit route
