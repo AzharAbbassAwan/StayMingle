@@ -141,7 +141,8 @@ app.all("*", (req, res, next) =>{
     next(new ExpressError(404, "Page not found!"));
 });
 
-//middleware to handle errors
+//middleware to handle errors using error calss
+
 app.use((err, req, res, next) =>{
     //Default value of status code will be 500
     let {status = 500} = err;
