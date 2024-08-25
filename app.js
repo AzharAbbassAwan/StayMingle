@@ -8,7 +8,8 @@ const ExpressError = require("./utils/ExpressError.js");
 require("dotenv").config();
 const listings = require("./routes/listing.js");
 const review = require("./routes/review.js");
-const session = require("session");
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
 
 
 //middlewares
