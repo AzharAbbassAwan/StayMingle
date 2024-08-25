@@ -1,17 +1,13 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const Listing = require("./models/listing.js");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
-const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
 require("dotenv").config();
-const {listingSchema} = require("./schema.js");
-const {reviewSchema} = require("./schema.js");
-const Review = require("./models/review.js");
 const listings = require("./routes/listing.js");
+const review = require("./routes/review.js");
 
 
 
@@ -45,18 +41,13 @@ app.get("/", (req, res) =>{
 });
 
 app.use("/listings", listings);
-
-
-
-
-
+app.use("/listings/:id/review", review)
 
 app.all("*", (req, res, next) =>{
     next(new ExpressError(404, "Page not found!"));
 });
 
 //middleware to handle errors using error calss
-
 app.use((err, req, res, next) =>{
     //Default value of status code will be 500
     let {status = 500} = err;
