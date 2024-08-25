@@ -20,7 +20,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
-app.use(flash);
+app.use(flash());
 
 const sessionOptions = {
     secret: "mysupersecret",
@@ -34,8 +34,9 @@ const sessionOptions = {
 
 app.use(session(sessionOptions));
 
-app.use((req,res, next) =>{
+app.use((req, res, next) =>{
     res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
     next();
 })
 
