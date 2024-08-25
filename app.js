@@ -10,7 +10,6 @@ const listings = require("./routes/listing.js");
 const review = require("./routes/review.js");
 
 
-
 //middlewares
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
