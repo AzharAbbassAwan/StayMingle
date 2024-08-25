@@ -20,9 +20,24 @@ app.use(express.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
-app.use(session({secret: "Mysite", resave: false, saveUninitialized: true}));
 app.use(flash);
 
+const sessionOptions = {
+    secret: "mysupersecret",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
+    }
+}
+
+app.use(session(sessionOptions));
+
+app.use((req,res, next) =>{
+    res.locals.success = req.flash("success");
+    next();
+})
 
 //MongoDB cluster url specified in .env file
 const MONGO_URL = process.env.MONGODB_URI;
@@ -41,7 +56,6 @@ async function main(){
 }
 
 app.get("/", (req, res) =>{
-    res.cookie("made by: ", "Azhar Abbass");
     res.send("Hi, I am root");
 });
 
