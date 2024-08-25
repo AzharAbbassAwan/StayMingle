@@ -19,6 +19,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
+app.use(session({secret: "Mysite", resave: false, saveUninitialized: true}));
 
 
 //MongoDB cluster url specified in .env file
@@ -38,6 +39,7 @@ async function main(){
 }
 
 app.get("/", (req, res) =>{
+    res.cookie("made by: ", "Azhar Abbass");
     res.send("Hi, I am root");
 });
 
