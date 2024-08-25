@@ -10,6 +10,7 @@ const listings = require("./routes/listing.js");
 const review = require("./routes/review.js");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
+const flash = require("connect-flash");
 
 
 //middlewares
@@ -20,6 +21,7 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 app.use(session({secret: "Mysite", resave: false, saveUninitialized: true}));
+app.use(flash);
 
 
 //MongoDB cluster url specified in .env file
