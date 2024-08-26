@@ -76,8 +76,8 @@ passport.deserializeUser(User.deserializeUser());
 //         username: "nodejsLearner",
 //     });
 
-//     User.register(fakeUser, "azhar123");
-//     res.send(registerUser);
+//     let registeredUser = await User.register(fakeUser, "azhar123");
+//     res.send(registeredUser);
 // });
 
 app.use("/listings", listingsRouter);

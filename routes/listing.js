@@ -4,6 +4,7 @@ const {listingSchema} = require("../schema.js");
 const Listing = require("../models/listing.js");
 const wrapAsync = require("../utils/wrapAsync.js");
 const ExpressError = require("../utils/ExpressError.js");
+const {isLogedIn} = require("../middleware.js");
 
 //custom middleware function form error handling
 const validateListing = (req, res, next) =>{
@@ -22,24 +23,23 @@ router.get("/", wrapAsync(async (req, res) =>{
     res.render("listings/index.ejs", {allListings});
 }));
 
-router.get("/new", (req, res) => {
+router.get("/new", isLogedIn, (req, res) => {
     res.render("listings/new.ejs");
 });
 
 //update route
-router.put("/:id", validateListing, wrapAsync(async (req, res) =>{
+router.put("/:id", isLogedIn, validateListing, wrapAsync(async (req, res) =>{
     if(!req.body.listing){
         throw new ExpressError(400, "Send valid data!");
     }
     let {id} = req.params;
-    Listing.findByIdAndUpdate(id, {...req.body.listing});
+    await Listing.findByIdAndUpdate(id, {...req.body.listing})
     req.flash("success", "Listing updated!");
-
     res.redirect(`/listings/${id}`);
 }));
 
 //delete route
-router.delete("/:id",wrapAsync(async (req, res) =>{
+router.delete("/:id", isLogedIn, wrapAsync(async (req, res) =>{
     let {id} = req.params;
     await Listing.findByIdAndDelete(id);
     req.flash("success", "Listing deleted!");
@@ -47,7 +47,7 @@ router.delete("/:id",wrapAsync(async (req, res) =>{
 }));
 
 //edit route
-router.get("/:id/edit",wrapAsync( async (req, res) =>{
+router.get("/:id/edit", isLogedIn, wrapAsync( async (req, res) =>{
     let {id} = req.params;
     let listing = await Listing.findById(id);
     
@@ -59,7 +59,7 @@ router.get("/:id/edit",wrapAsync( async (req, res) =>{
 }));
 
 
-router.get("/:id",wrapAsync(async (req, res) =>{
+router.get("/:id", wrapAsync(async (req, res) =>{
     let {id} = req.params;
     const listing = await Listing.findById(id).populate("reviews");
 
@@ -71,7 +71,7 @@ router.get("/:id",wrapAsync(async (req, res) =>{
 }));
 
 //Create route
-router.post("/",validateListing, wrapAsync(async(req, res, next) =>{
+router.post("/", isLogedIn, validateListing, wrapAsync(async(req, res, next) =>{
     const newListing = new Listing(req.body.listing);
     await newListing.save();
     req.flash("success", "New Listing Creatd");
