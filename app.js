@@ -6,8 +6,6 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
 require("dotenv").config();
-const listings = require("./routes/listing.js");
-const review = require("./routes/review.js");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const flash = require("connect-flash");
@@ -15,6 +13,9 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 
+const listingsRouter = require("./routes/listing.js");
+const reviewRouter = require("./routes/review.js");
+const userRouter = require("./routes/user.js");
 
 //middlewares
 app.set("view engine", "ejs");
@@ -76,15 +77,12 @@ app.get("/demouser", async(req, res) =>{
     });
 
     User.register(fakeUser, "azhar123");
-    res.send(registeredUser);
-})
-
-app.get("/", (req, res) =>{
-    res.send("Hi, I am root");
+    res.send(registerUser);
 });
 
-app.use("/listings", listings);
-app.use("/listings/:id/review", review)
+app.use("/listings", listingsRouter);
+app.use("/listings/:id/review", reviewRouter);
+app.use("/", userRouter);
 
 app.all("*", (req, res, next) =>{
     next(new ExpressError(404, "Page not found!"));
