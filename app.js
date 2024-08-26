@@ -12,7 +12,7 @@ const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const flash = require("connect-flash");
 const passport = require("passport");
-const localStrategy = require("passport-local");
+const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 
 
@@ -41,7 +41,9 @@ app.use((req, res, next) =>{
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     next();
-})
+});
+
+
 
 //MongoDB cluster url specified in .env file
 const MONGO_URL = process.env.MONGODB_URI;
@@ -58,6 +60,23 @@ main().then(() =>{
 async function main(){
     await mongoose.connect(MONGO_URL);
 }
+
+//using passport as middleware
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+app.get("/demouser", async(req, res) =>{
+    let fakeUser = new User({
+        email: "azharsde1@gmail.com",
+        username: "nodejsLearner",
+    });
+
+    User.register(fakeUser, "azhar123");
+})
 
 app.get("/", (req, res) =>{
     res.send("Hi, I am root");
