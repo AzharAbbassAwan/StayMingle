@@ -11,6 +11,9 @@ const review = require("./routes/review.js");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const flash = require("connect-flash");
+const passport = require("passport");
+const localStrategy = require("passport-local");
+const User = require("./models/user.js");
 
 
 //middlewares
