@@ -8,14 +8,21 @@ router.get("/signup", (req, res) =>{
     res.render("users/signup.ejs");
 });
 
-router.post("/signup", wrapAsync( async (req, res) =>{
+router.post("/signup", wrapAsync( async (req, res, next) =>{
     try{
         let {username, email, password} = req.body;
-        const newUser = new User({email, username});
+        //const register = new User({email, username, password})
+        const newUser = new User({email, username, password});
         const registedUser = await User.register(newUser, password);
-        console.log(registedUser);
+        await req.login(registedUser, function(err) {
+            if(err){
+                console.log(err);
+               return next(err);
+            }
+       
         req.flash("success", "wellcome to StayMingle");
         res.redirect("/listings");
+    });
     } catch(e){
         req.flash("error", e.message);
         res.redirect("/signup");
