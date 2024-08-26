@@ -76,6 +76,7 @@ app.get("/demouser", async(req, res) =>{
     });
 
     User.register(fakeUser, "azhar123");
+    res.send(registeredUser);
 })
 
 app.get("/", (req, res) =>{
