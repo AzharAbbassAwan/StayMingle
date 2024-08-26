@@ -70,15 +70,15 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.get("/demouser", async(req, res) =>{
-    let fakeUser = new User({
-        email: "azharsde1@gmail.com",
-        username: "nodejsLearner",
-    });
+// app.get("/demouser", async(req, res) =>{
+//     let fakeUser = new User({
+//         email: "azharsde1@gmail.com",
+//         username: "nodejsLearner",
+//     });
 
-    User.register(fakeUser, "azhar123");
-    res.send(registerUser);
-});
+//     User.register(fakeUser, "azhar123");
+//     res.send(registerUser);
+// });
 
 app.use("/listings", listingsRouter);
 app.use("/listings/:id/review", reviewRouter);
