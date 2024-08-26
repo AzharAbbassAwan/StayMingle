@@ -38,14 +38,6 @@ const sessionOptions = {
 
 app.use(session(sessionOptions));
 
-app.use((req, res, next) =>{
-    res.locals.success = req.flash("success");
-    res.locals.error = req.flash("error");
-    next();
-});
-
-
-
 //MongoDB cluster url specified in .env file
 const MONGO_URL = process.env.MONGODB_URI;
 //port
@@ -79,6 +71,13 @@ passport.deserializeUser(User.deserializeUser());
 //     let registeredUser = await User.register(fakeUser, "azhar123");
 //     res.send(registeredUser);
 // });
+
+app.use((req, res, next) =>{
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    res.locals.currUser = req.user;
+    next();
+});
 
 app.use("/listings", listingsRouter);
 app.use("/listings/:id/review", reviewRouter);
