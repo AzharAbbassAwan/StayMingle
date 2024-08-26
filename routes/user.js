@@ -33,6 +33,16 @@ router.post("/login", passport.authenticate("local",{
     async (req, res) =>{
     req.flash("success", "Wellcome back to StayMingle");    
     res.redirect("/listings");
+});
+
+router.get("/logout", (req, res, next) =>{
+    req.logout((err) =>{
+        if(err){
+            return next(err);
+        }
+        req.flash("success", "You are logged out!");
+        res.redirect("/listings");
+    })
 })
 
 module.exports = router;
