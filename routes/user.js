@@ -15,13 +15,11 @@ router.post("/signup", wrapAsync( async (req, res, next) =>{
         const registedUser = await User.register(newUser, password);
         await req.login(registedUser, function(err) {
             if(err){
-                console.log(err);
                return next(err);
             }
-       
-        req.flash("success", "wellcome to StayMingle");
-        res.redirect("/listings");
-    });
+            req.flash("success", "wellcome to StayMingle");
+            res.redirect("/listings");
+        });
     } catch(e){
         req.flash("error", e.message);
         res.redirect("/signup");
