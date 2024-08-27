@@ -5,7 +5,7 @@ const Review = require("../models/review.js");
 const wrapAsync = require("../utils/wrapAsync.js");
 const ExpressError = require("../utils/ExpressError.js");
 const Listing = require("../models/listing.js");
-
+const {isLogedIn} = require("../middleware.js");
 
 
 //custom middleware function for review validation
@@ -21,7 +21,7 @@ const valiateReview = (req, res, next) =>{
 }
 
 //Posting reviews
-router.post("/", valiateReview, wrapAsync(async (req, res) =>{
+router.post("/", isLogedIn, valiateReview, wrapAsync(async (req, res) =>{
     let {id} = req.params;
     let listing = await Listing.findById(id);
     let newReview = new Review(req.body.review);
