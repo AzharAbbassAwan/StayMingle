@@ -4,7 +4,7 @@ const {listingSchema} = require("../schema.js");
 const Listing = require("../models/listing.js");
 const wrapAsync = require("../utils/wrapAsync.js");
 const ExpressError = require("../utils/ExpressError.js");
-const {isLogedIn} = require("../middleware.js");
+const {isLogedIn, isOwner} = require("../middleware.js");
 
 //custom middleware function form error handling
 const validateListing = (req, res, next) =>{
@@ -47,7 +47,10 @@ router.delete("/:id", isLogedIn, wrapAsync(async (req, res) =>{
 }));
 
 //edit route
-router.get("/:id/edit", isLogedIn, wrapAsync( async (req, res) =>{
+router.get("/:id/edit",
+    isLogedIn,
+    isOwner,
+    wrapAsync( async (req, res) =>{
     let {id} = req.params;
     let listing = await Listing.findById(id);
     
