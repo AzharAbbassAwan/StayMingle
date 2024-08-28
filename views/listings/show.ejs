@@ -84,6 +84,7 @@
             >
             <% } %>
           </p>
+          <% if(review.author.equals(currUser)){ %>
           <form
             action="/listings/<%= listing._id %>/review/<%= review._id %>?_method=Delete"
             class="mb-3"
@@ -91,6 +92,7 @@
           >
             <button class="btn btn-sm btn-danger">Delete</button>
           </form>
+          <% } %>
         </div>
       </div>
       <% } %>
