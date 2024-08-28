@@ -30,7 +30,6 @@ router.get("/new", isLogedIn, listingController.new);
     
 router
     .route("/:id")
-    .get(isLogedIn, listingController.new)
     .get(wrapAsync(listingController.show))
     .put(isLogedIn, validateListing, wrapAsync(listingController.update))
     .delete(isLogedIn, wrapAsync(listingController.destroy));
