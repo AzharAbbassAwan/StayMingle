@@ -10,6 +10,17 @@ module.exports.isLogedIn = (req, res, next) =>{
     next();
 }
 
+module.exports.valiateReview = (req, res, next) =>{
+    let {error} = reviewSchema.validate(req.body);
+    if(error){
+        let errMsg = error.details.map((el) => el.message).join(",")
+        throw new ExpressError(400, error);
+    }
+    else{
+        next();
+    }
+}
+
 module.exports.saveRedirectUrl = (req, res, next) =>{
     if(req.session.redirectUrl){
         res.locals.redirectUrl = req.session.redirectUrl;
