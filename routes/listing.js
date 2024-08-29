@@ -76,7 +76,7 @@ router.get("/:id", wrapAsync(async (req, res) =>{
     res.render("listings/show.ejs", {listing});
 }));
 
-//Create route
+//Create route for listings
 router.post("/", isLogedIn, validateListing, wrapAsync(async(req, res, next) =>{
     const newListing = new Listing(req.body.listing);
     newListing.owner = req.user._id;
