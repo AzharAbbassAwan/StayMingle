@@ -67,7 +67,7 @@ passport.deserializeUser(User.deserializeUser());
 
 // app.get("/demouser", async(req, res) =>{
 //     let fakeUser = new User({
-//         email: "azharsde1@gmail.com",
+// //        email: "azharsde1@gmail.com",
 //         username: "nodejsLearner",
 //     });
 
@@ -99,5 +99,5 @@ app.use((err, req, res, next) =>{
 });
 
 app.listen(port, () => {
-    console.log(`server is listening to port ${port}`);
+    console.log(`server is listening at port ${port}`);
 });

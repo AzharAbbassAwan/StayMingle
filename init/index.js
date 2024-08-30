@@ -18,7 +18,7 @@ async function main(){
     await mongoose.connect(MONGO_URL);
 }
 
-//initializing DB with demo data
+//initializing DB with sample data
 const initDB = async () =>{
     await Listing.deleteMany({});
     initData.data = initData.data.map((obj) => ({
