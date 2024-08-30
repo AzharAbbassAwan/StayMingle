@@ -4,7 +4,7 @@ const {listingSchema} = require("../schema.js");
 const Listing = require("../models/listing.js");
 const wrapAsync = require("../utils/wrapAsync.js");
 const ExpressError = require("../utils/ExpressError.js");
-const {isLogedIn, isOwner} = require("../middleware.js");
+const {isLogedIn, isOwner, validateListing} = require("../middleware.js");
 const multer = require("multer");
 const upload = multer({dest: "uploads/"});
 
