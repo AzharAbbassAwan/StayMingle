@@ -90,7 +90,7 @@ app.all("*", (req, res, next) =>{
     next(new ExpressError(404, "Page not found!"));
 });
 
-//middleware to handle errors using error calss
+
 app.use((err, req, res, next) =>{
    
     let {status = 500} = err;
