@@ -19,7 +19,7 @@ router
         res.send(req.file);
     });
 
-//New Route
+
 router.get("/new", isLogedIn, listingController.new);
     
 router
