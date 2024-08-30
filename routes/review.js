@@ -8,7 +8,6 @@ const {isLogedIn, isReviewAuthor, valiateReview} = require("../middleware.js");
 const reviewController = require("../controllers/reviews.js");
 
 
-//Posting reviews
 router.post("/", isLogedIn, valiateReview, wrapAsync(reviewController.create));
 
 
