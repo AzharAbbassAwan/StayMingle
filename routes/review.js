@@ -11,7 +11,7 @@ const reviewController = require("../controllers/reviews.js");
 //Posting reviews
 router.post("/", isLogedIn, valiateReview, wrapAsync(reviewController.create));
 
-//deleting reviews
+
 router.delete("/:reviewId", 
     isLogedIn,
     isReviewAuthor, 
