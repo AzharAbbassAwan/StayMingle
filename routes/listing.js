@@ -10,17 +10,6 @@ const upload = multer({dest: "uploads/"});
 
 const listingController = require("../controllers/listings.js");
 
-//custom middleware function form error handling
-const validateListing = (req, res, next) =>{
-    let {error} = listingSchema.validate(req.body);
-    if(error){
-        let errMsg = error.details.map((el) => el.message).join(",")
-        throw new ExpressError(400, error);
-    }
-    else{
-        next();
-    }
-}
 
 router
     .route("/")
