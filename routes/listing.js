@@ -9,7 +9,7 @@ const multer = require("multer");
 const listingController = require("../controllers/listings.js");
 const {storage} = require("../cloudConfig.js");
 
-const upload = multer({dest: "uploads/"});
+const upload = multer({dest: storage});
 
 
 
