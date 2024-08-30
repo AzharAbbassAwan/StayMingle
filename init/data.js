@@ -336,7 +336,7 @@ const sampleListings = [
       country: "United States",
     },
     {
-      title: "Secluded Beach House in Costa Rica",
+      title: "Secluded Beach House in Maxico",
       description:
         "Escape to a secluded beach house on the Pacific coast of Costa Rica. Surf, enjoy and unwind.",
       image: {
