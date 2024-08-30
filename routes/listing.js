@@ -6,9 +6,11 @@ const wrapAsync = require("../utils/wrapAsync.js");
 const ExpressError = require("../utils/ExpressError.js");
 const {isLogedIn, isOwner, validateListing} = require("../middleware.js");
 const multer = require("multer");
+const listingController = require("../controllers/listings.js");
+const {storage} = require("../cloudConfig.js");
+
 const upload = multer({dest: "uploads/"});
 
-const listingController = require("../controllers/listings.js");
 
 
 router
