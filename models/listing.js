@@ -11,7 +11,6 @@ description:{
     type: String,
 },
 image: {
-    type: Object,
     url: String,
     filename: String,
 },
