@@ -111,3 +111,10 @@ body{
     align-items: space-evenly;
 
 }
+
+/* Map Styles */
+
+#map{
+    height: 400px;
+    width: 80vh;
+}
