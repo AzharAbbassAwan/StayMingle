@@ -1,6 +1,10 @@
 const Listing = require("../models/listing.js");
 const Nominatim = require('nominatim-geocoder')
-const geocoder = new Nominatim()
+const geocoder = new Nominatim();
+const axios = require('axios');
+const { response } = require("express");
+const apiKey = process.env.MAP_API_KEY;
+
 
 module.exports.index = async (req, res) =>{
     const allListings = await Listing.find({});
@@ -23,21 +27,28 @@ module.exports.show = async (req, res) =>{
     res.redirect("/listings");
     }
 
-    var coordinates = new Array(2);
-    const axios = require('axios');
-
-    const apiKey = 'd9063b1ff2cc40e2b1de397815f8f543';
-    axios.get(`https://api.opencagedata.com/geocode/v1/json`, {
-    params: {
-        q: listing.location,
-        key: apiKey
+    try{
+        var response = await axios.get(`https://api.opencagedata.com/geocode/v1/json`, {
+        params: {
+            q: listing.location,
+            key: apiKey
+        }
+        })
     }
-    })
-    .then(response => {coordinates[0] = response.data.results[0].geometry.lat; coordinates[1] = response.data.results[0].geometry.lng; })
-    .catch(error => console.error(error));
-
-    console.log(coordinates);
-    res.render("listings/show.ejs", {listing, coordinates});
+    catch{
+        (error => console.error(error));
+    }
+    let lattitude, longitude;
+    if(response.data.results.length > 0){
+    lattitude = await response.data.results[0].geometry.lat;
+    longitude = await response.data.results[0].geometry.lng;
+    }
+    else{
+        //setting default location to London if location is undfined.
+        lattitude = 51.5072;
+        longitude = 0.1276;
+    }
+    res.render("listings/show.ejs", {listing, lattitude, longitude});
 };
 
 module.exports.creat = async(req, res, next) =>{
