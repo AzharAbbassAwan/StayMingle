@@ -1,4 +1,6 @@
 const Listing = require("../models/listing.js");
+const Nominatim = require('nominatim-geocoder')
+const geocoder = new Nominatim()
 
 module.exports.index = async (req, res) =>{
     const allListings = await Listing.find({});
@@ -20,7 +22,22 @@ module.exports.show = async (req, res) =>{
     req.flash("error", "Listing you requested does not exist!");
     res.redirect("/listings");
     }
-    res.render("listings/show.ejs", {listing});
+
+    var coordinates = new Array(2);
+    const axios = require('axios');
+
+    const apiKey = 'd9063b1ff2cc40e2b1de397815f8f543';
+    axios.get(`https://api.opencagedata.com/geocode/v1/json`, {
+    params: {
+        q: listing.location,
+        key: apiKey
+    }
+    })
+    .then(response => {coordinates[0] = response.data.results[0].geometry.lat; coordinates[1] = response.data.results[0].geometry.lng; })
+    .catch(error => console.error(error));
+
+    console.log(coordinates);
+    res.render("listings/show.ejs", {listing, coordinates});
 };
 
 module.exports.creat = async(req, res, next) =>{

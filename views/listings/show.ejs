@@ -1,4 +1,9 @@
 <% layout('layouts/boilerplate') -%>
+<script>
+  var locationCoordinates = "<%= JSON.stringify(coordinates) %>";
+  var locationName = "<%= listing.location%>";
+  
+</script>
 <div class="row">
   <div class="col-8 offset-3 mt-3">
     <h3>Listing Details</h3>
@@ -103,10 +108,10 @@
       </div>
       <% } %>
     </div>
-    <div class="col-8 offset-3 mb-4">
+    <div class="col-8 mb-4 mt-3">
       <h3>Where you'll be</h3>
       <div id="map"></div>
     </div>
   </div>
 </div>
-<!-- <script src="/js/map.js"></script> -->
+<script src="/js/map.js"></script>
