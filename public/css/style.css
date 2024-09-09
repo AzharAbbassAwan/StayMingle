@@ -64,7 +64,7 @@ body{
 
 /* Show page  */
 .show-img{
-    height: 30vh;
+    height: 50vh;
 }
 .btns{
     display: flex;
@@ -117,4 +117,11 @@ body{
 #map{
     height: 500px;
     width: 57vw;
+}
+.custom-icon {
+    background-color: red; /* Change this to the color you need */
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
 }

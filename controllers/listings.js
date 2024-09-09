@@ -48,6 +48,7 @@ module.exports.show = async (req, res) =>{
         lattitude = 51.5072;
         longitude = 0.1276;
     }
+
     res.render("listings/show.ejs", {listing, lattitude, longitude});
 };
 
@@ -57,6 +58,33 @@ module.exports.creat = async(req, res, next) =>{
     const newListing = new Listing(req.body.listing);
     newListing.owner = req.user._id;
     newListing.image = {url, filename};
+
+    try{
+        var response = await axios.get(`https://api.opencagedata.com/geocode/v1/json`, {
+        params: {
+            q: newListing.location,
+            key: apiKey
+        }
+        })
+    }
+    catch{
+        (error => console.error(error));
+    }
+    let lattitude, longitude;
+    if(response.data.results.length > 0){
+    lattitude = await response.data.results[0].geometry.lat;
+    longitude = await response.data.results[0].geometry.lng;
+    }
+    else{
+        //setting default location to London if location is undfined.
+        lattitude = 51.5072;
+        longitude = 0.1276;
+    }
+    var geometry = new Array(2);
+    geometry[0] = lattitude;
+    geometry[1] = longitude;
+    newListing.geometry.type = 'Point';
+    newListing.geometry.coordinates = geometry;
     await newListing.save();
     req.flash("success", "New Listing Creatd");
     res.redirect("/listings");
