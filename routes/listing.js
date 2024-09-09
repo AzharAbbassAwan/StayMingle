@@ -8,8 +8,7 @@ const listingController = require("../controllers/listings.js");
 
 const {storage} = require("../cloudConfig.js");
 
-const upload = multer({dest: storage});
-
+const upload = multer({storage});
 
 
 router
