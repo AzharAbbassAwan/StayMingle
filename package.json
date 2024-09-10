@@ -1,4 +1,7 @@
 {
+  "engines": {
+    "node": "v16.18.0"
+  },
   "name": "staymingle",
   "version": "1.0.0",
   "description": "",
