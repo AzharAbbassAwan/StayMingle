@@ -1,5 +1,6 @@
 const Listing = require("../models/listing.js");
-const Nominatim = require('nominatim-geocoder')
+const Nominatim = require('nominatim-geocoder');
+const ExpressError = require("../utils/ExpressError.js");
 const geocoder = new Nominatim();
 const axios = require('axios');
 const { response } = require("express");
@@ -123,4 +124,13 @@ module.exports.destroy = async (req, res) =>{
     await Listing.findByIdAndDelete(id);
     req.flash("success", "Listing deleted!");
     res.redirect("/listings");
+};
+
+module.exports.search = async (req, res) =>{
+    let search_input = req.body.userSearch;
+    const allListings = await Listing.find({ $text: { $search: search_input } }).exec();
+    if(allListings.length === 0){
+        throw new ExpressError(404, `No Listing found for ${search_input}`);
+   }
+    res.render("listings/index.ejs", {allListings});
 };

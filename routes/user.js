@@ -5,6 +5,7 @@ const passport = require("passport");
 const { saveRedirectUrl } = require("../middleware.js");
 
 const userController = require("../controllers/users.js"); 
+const listingController = require("../controllers/listings.js");
 
 router 
     .route("/signup")
@@ -22,5 +23,7 @@ router
         );    
 
 router.get("/logout", userController.logout);
+
+router.get("/" , listingController.index);
 
 module.exports = router;
