@@ -131,6 +131,6 @@ module.exports.search = async (req, res) =>{
     const allListings = await Listing.find({ $text: { $search: search_input } }).exec();
     if(allListings.length === 0){
         throw new ExpressError(404, `No Listing found for ${search_input}`);
-   }
+    }
     res.render("listings/index.ejs", {allListings});
 };
