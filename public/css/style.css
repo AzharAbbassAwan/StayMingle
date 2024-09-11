@@ -12,9 +12,12 @@ body{
 
 .navbar{
     height: 5rem;
-    background-color: #fff;
+    background-color: #fff !important;
 }
-
+.navbar-collapse{
+    height: 5rem;
+    background-color: #fff !important;
+}
 .fa-compass{
     font-size: 2rem;
     color: #fe434a;
@@ -29,7 +32,11 @@ body{
     border-radius: 22px;
     padding: 0.3rem;
     box-shadow: rgba(104, 103, 103, 0.35) 0px 5px 9px;
-  }
+}
+.nav-search-small{
+    display: none !important;
+    width: 60%;
+}
 .search-btn {
     background-color: #fe424d !important;
     color: #fff;
@@ -129,8 +136,14 @@ box-shadow: none !important;
 }
 
 /* Show page  */
+
+.single-listing-contaienr{
+    width: 90%;
+    display: flex !important;
+    justify-content: center;
+}
 .show-img{
-    height: 50vh;
+    height: 60vh;
 }
 .btns{
     display: flex;
@@ -148,6 +161,12 @@ box-shadow: none !important;
 }
 
 /* footer  */
+footer{
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    padding: 0 !important;
+}
 .f-info-links a{
     text-decoration: none;
     color: #222;
@@ -182,7 +201,7 @@ box-shadow: none !important;
 
 #map{
     height: 500px;
-    width: 57vw;
+    width: 60vw;
 }
 .custom-icon {
     background-color: red; /* Change this to the color you need */
@@ -191,3 +210,58 @@ box-shadow: none !important;
     height: 20px;
     display: inline-block;
 }
+
+@media screen and (max-width: 767px){
+    .nav-search-small{
+        display: block !important;
+        padding: 0 !important;
+        height: 50px;
+        border: none;
+    }
+    .show-img{
+        height: 50vh;
+    }
+    .review-card{
+        margin-left: 0 !important;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    #map{
+        height: 400px;
+        width: 87vw;
+    }
+    .single-listing-contaienr{
+        width: 100% !important;
+        margin-left: 0 !important;
+    }
+    .single-listing-contaienr .btn-delete{
+        margin-left: 12px;
+    }
+    .navbar-collapse{
+        height: auto;
+    }
+    .nav-search{
+        padding: 0;
+    }
+    
+    .nav-search-small form{
+        margin: 0 auto !important;
+    }
+    .nav-search-small form button{
+        margin: 4px 4px 0 0;
+    }
+    .nav-search-small .btn-search{
+        background-color: #fff;
+    }
+    .nav-search-small input{
+        padding: 5px 5px 0 5px !important;
+    }
+    #filters{
+        display: none;
+    }
+    .f-info{
+        height: 5rem;
+    }
+  }
+  

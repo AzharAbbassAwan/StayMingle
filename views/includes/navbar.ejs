@@ -3,6 +3,19 @@
     <a class="navbar-brand" href="/listings"
       ><i class="fa-regular fa-compass"></i
     ></a>
+    <div class="navbar-nav nav-search nav-search-small">
+      <form class="form-inline d-flex my-2 my-lg-0 needs-validation" method="post" action="/listings/search" novalidate>
+        <input
+          class="form-control mr-sm-2 search-input"
+          type="search"
+          name="userSearch"
+          placeholder="Search destinations" required
+        />
+        <button class="btn search-btn" type="submit">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>
+    </div>
     <button
       class="navbar-toggler"
       type="button"
