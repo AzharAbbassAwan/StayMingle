@@ -229,7 +229,7 @@ footer{
 @media screen and (max-width: 576px) {
     #map{
         height: 400px;
-        width: 87vw;
+        width: 85vw;
     }
     .single-listing-contaienr{
         width: 100% !important;
