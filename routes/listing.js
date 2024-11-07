@@ -23,7 +23,7 @@ router.get("/new", isLogedIn, listingController.new);
 //search route
 router.post("/search", wrapAsync(listingController.search));
 
-    
+        
 router
     .route("/:id")
     .get(wrapAsync(listingController.show))
