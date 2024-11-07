@@ -36,7 +36,7 @@ geometry:{
 },
 category:{
     type: String,
-    enum: ['mountains', 'arctic', 'farm', 'deserts', 'pools', 'castles', 'rooms', 'trending', 'camping', 'iconic'],
+    enum: ['mountains', 'arctic', 'farms', 'deserts', 'pools', 'castles', 'rooms', 'trending', 'camping', 'iconic'],
 }
 });
 
